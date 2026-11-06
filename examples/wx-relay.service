@@ -1,0 +1,12 @@
+[Unit]
+Description=WeChat relay adapter
+After=network-online.target
+
+[Service]
+EnvironmentFile=%h/.config/weixin-relay.env
+ExecStart=%h/.venv/bin/python %h/weixin-relay/weixin_relay.py
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=default.target

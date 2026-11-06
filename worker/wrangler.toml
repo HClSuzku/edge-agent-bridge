@@ -1,0 +1,40 @@
+# 部署前要改的三处：账户 id、KV namespace id、盒子机器 id / 端口地址
+name = "edge-agent-bridge"
+main = "src/index.js"
+compatibility_date = "2026-11-01"
+
+# 填你自己的 Cloudflare 账户 id（wrangler whoami 可查）
+account_id = "<CLOUDFLARE_ACCOUNT_ID>"
+workers_dev = true
+
+# Durable Objects 与 KV 都是实例资源，必须自己创建后把 id 填进来
+[[kv_namespaces]]
+binding = "KV"
+id = "<KV_NAMESPACE_ID>"
+
+[[durable_objects.bindings]]
+name = "QUEUE"
+class_name = "JobQueue"
+
+[[durable_objects.bindings]]
+name = "WXQ"
+class_name = "WxRelay"
+
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["JobQueue"]
+
+[[migrations]]
+tag = "v2"
+new_sqlite_classes = ["WxRelay"]
+
+[vars]
+# 盒子（instabox 机器）
+BOX_MACHINE_ID = "m_xxxxxxxxxxxxxxxxxxxxxxxxx"
+BOX_BASE = "https://8080-xxxxxxxxxxxxxxxxxxxxxxxxx.instabox.tech"
+# 微信 iLink 应用参数，默认即可
+ILINK_BASE = "https://ilinkai.weixin.qq.com"
+
+[triggers]
+# 兜底闹钟：DO 自身 alarm 会自续期，这个 cron 只是防 alarm 链意外断掉
+crons = ["*/10 * * * *"]
