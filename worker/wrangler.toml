@@ -33,7 +33,7 @@ new_sqlite_classes = ["WxRelay"]
 BOX_MACHINE_ID = "m_xxxxxxxxxxxxxxxxxxxxxxxxx"
 BOX_BASE = "https://8080-xxxxxxxxxxxxxxxxxxxxxxxxx.instabox.tech"
 # 微信 iLink 应用参数，默认即可
-ILINK_BASE = "https://ilinkai.weixin.qq.com"
+WX_ILINK_BASE = "https://ilinkai.weixin.qq.com"
 
 [triggers]
 # 兜底闹钟：DO 自身 alarm 会自续期，这个 cron 只是防 alarm 链意外断掉
